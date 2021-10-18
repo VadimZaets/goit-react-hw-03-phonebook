@@ -1,38 +1,46 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import { useState } from "react";
 
 
-export default class Form extends Component {
-  state = {
-    name: "",
-    number: "",
-  };
 
-  handleChange = (e) => {
+
+const Form = () => {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+
+    const handleSubmit = (e) => {
+     e.preventDefault();
+
+
+   };
+
+const handleChange = e => {
     const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
+
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+
+      case 'number':
+        setNumber(value);
+        break;
+
+      default:
+        return;
+    }
+
+   
   };
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    this.props.onAddContact({ ...this.state });
-
-    this.setState({ name: "", number: "" });
-  };
-  render() {
     return (
-      <form  onSubmit={this.handleSubmit}>
+      <form  onSubmit={handleSubmit}>
         <label >
           Name
           <input
             
             type="text"
             name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
+            value={name}
+            onChange={handleChange}
           />
         </label>
         <label >
@@ -41,8 +49,8 @@ export default class Form extends Component {
            
             type="text"
             name="number"
-            value={this.state.number}
-            onChange={this.handleChange}
+            value={number}
+            onChange={handleChange}
           />
         </label>
         <button  type="submit">
@@ -50,11 +58,14 @@ export default class Form extends Component {
         </button>
       </form>
     );
-  }
-}
 
-Form.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
 };
+export default Form;
+
+
+
+
+
+
+
+
